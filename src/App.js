@@ -5,10 +5,11 @@ import CollectionCard from "./components/CollectionCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PunkList from "./components/Punklist";
+import Main from "./components/Main";
 
 function App() {
   const [punkListData, setPunkListData] = useState([]);
-
+  const [selectedPunk, setSelectedPunk] = useState(0);
   useEffect(() => {
     const getMyNfts = async () => {
       const openSeaData = await axios.get(
@@ -24,8 +25,15 @@ function App() {
   return (
     <div className="app">
       <Header />
-
-      <PunkList punkListData={punkListData} />
+      {punkListData.length > 0 && (
+        <>
+          <Main punkListData={punkListData} selectedPunk={selectedPunk} />
+          <PunkList
+            punkListData={punkListData}
+            setSelectedPunk={setSelectedPunk}
+          />
+        </>
+      )}
     </div>
   );
 }
